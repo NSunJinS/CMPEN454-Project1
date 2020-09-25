@@ -15,3 +15,9 @@ output_layer_3 = apply_relu(output_layer_2);
 
 %Second Convolution (Layer 4) - Points to function file "apply_convolve2.m"
 output_layer_4 = apply_convolve2(output_layer_3,filterbanks{1,4},biasvectors{1,4});
+
+%Second ReLU (Layer 5) - Points to function file "apply_relu.m"
+output_layer_5 = apply_relu(output_layer_4);
+
+%First Maxpool (Layer 6) - Points to function file "apply_maxpool1.m"
+output_layer_6 = apply_maxpool1(output_layer_5);
