@@ -7,7 +7,7 @@ load('./CNNparameters.mat','filterbanks','biasvectors');
 input_image = imrgb; % <- interchange imrgb for image file under test.
 
 % 1st Layer - First Image Normalization - Points to function file "apply_imnormalize.m"
-output_layer_1 = apply_imnormalize(imrgb);
+output_layer_1 = apply_imnormalize(input_image);
 
 % 2nd Layer - First Convolution - Points to function file "apply_convolve.m"
 output_layer_2 = apply_convolve(output_layer_1,filterbanks{1,2},biasvectors{1,2});
@@ -61,4 +61,5 @@ output_layer_17 = apply_fullconnect(output_layer_16,filterbanks{1,17},biasvector
 output_layer_18 = apply_softmax(output_layer_17);
 
 % Output Graph with Probabilities
-%bar(
+output = (output_layer_18(:));
+bar(output)
