@@ -4,20 +4,27 @@
 load('./debuggingTest.mat'); 
 load('./CNNparameters.mat','filterbanks','biasvectors');
 
-%First Image Normalization (Layer 1) - Points to function file "apply_imnormalize.m"
+% 1st Layer - First Image Normalization - Points to function file "apply_imnormalize.m"
 output_layer_1 = apply_imnormalize(imrgb);
 
-%First Convolution (Layer 2) - Points to function file "apply_convolve1.m"
+% 2nd Layer - First Convolution - Points to function file "apply_convolve1.m"
 output_layer_2 = apply_convolve1(output_layer_1,filterbanks{1,2},biasvectors{1,2});
 
-%First ReLU (Layer 3) - Points to function file "apply_relu.m"
+% 3rd Layer - First ReLU - Points to function file "apply_relu.m"
 output_layer_3 = apply_relu(output_layer_2);
 
-%Second Convolution (Layer 4) - Points to function file "apply_convolve2.m"
+% 4th Layer - Second Convolution - Points to function file "apply_convolve2.m"
 output_layer_4 = apply_convolve2(output_layer_3,filterbanks{1,4},biasvectors{1,4});
 
-%Second ReLU (Layer 5) - Points to function file "apply_relu.m"
+% 5th Layer - Second ReLU - Points to function file "apply_relu.m"
 output_layer_5 = apply_relu(output_layer_4);
 
-%First Maxpool (Layer 6) - Points to function file "apply_maxpool1.m"
+% 6th Layer - First Maxpool - Points to function file "apply_maxpool1.m"
 output_layer_6 = apply_maxpool1(output_layer_5);
+
+% 7th Layer - Third Convolution - Points to function file "apply_convolve3.m"
+output_layer_7 = apply_convolve3(output_layer_6,filterbanks{1,7},biasvectors{1,7});
+
+% 8th Layer - Third ReLU - Points to function file "apply_relu.m"
+output_layer_8 = apply_relu(output_layer_7);
+
