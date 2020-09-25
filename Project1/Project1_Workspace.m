@@ -49,4 +49,11 @@ output_layer_14 = apply_convolve(output_layer_13,filterbanks{1,14},biasvectors{1
 % 15th Layer - Sixth ReLU - Points to function file "apply_relu.m"
 output_layer_15 = apply_relu(output_layer_14);
 
+% 16th Layer - Third Maxpool - Points to function file "apply_maxpool1.m"
+output_layer_16 = apply_maxpool1(output_layer_15);
 
+% 17th Layer - Fullconnect - Points to function file "apply_fullconnect.m"
+output_layer_17 = apply_fullconnect(output_layer_16,filterbanks{1,17},biasvectors{1,17});
+
+% 18th Layer - Softmax - Points to function file "apply_softmax.m"
+output_layer_18 = apply_softmax(output_layer_17);
