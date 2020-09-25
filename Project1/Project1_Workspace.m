@@ -40,5 +40,13 @@ output_layer_11 = apply_maxpool1(output_layer_10);
 % 12th Layer - Fifth Convolution - Points to function file "apply_convolve.m"
 output_layer_12 = apply_convolve(output_layer_11,filterbanks{1,12},biasvectors{1,12});
 
+% 13th Layer - Fifth ReLU - Points to function file "apply_relu.m"
+output_layer_13 = apply_relu(output_layer_12);
+
+% 14th Layer - Sixth Convolution - Points to function file "apply_convolve.m"
+output_layer_14 = apply_convolve(output_layer_13,filterbanks{1,14},biasvectors{1,14});
+
+% 15th Layer - Sixth ReLU - Points to function file "apply_relu.m"
+output_layer_15 = apply_relu(output_layer_14);
 
 
