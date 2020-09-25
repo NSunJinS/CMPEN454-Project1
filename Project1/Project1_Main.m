@@ -1,8 +1,10 @@
-%EE454 Project 1 - Workspace
+% EE454 Project 1 - Main
+% Group Members: Danny McClure, Nicholas Scarpitta, Weslee Hwang, & Mackenzie Myers
 
-%Import Test Image - "layerResults" is correct answers to test image.
 load('./debuggingTest.mat'); 
 load('./CNNparameters.mat','filterbanks','biasvectors');
+
+input_image = imrgb; % <- interchange imrgb for image file under test.
 
 % 1st Layer - First Image Normalization - Points to function file "apply_imnormalize.m"
 output_layer_1 = apply_imnormalize(imrgb);
@@ -19,8 +21,8 @@ output_layer_4 = apply_convolve(output_layer_3,filterbanks{1,4},biasvectors{1,4}
 % 5th Layer - Second ReLU - Points to function file "apply_relu.m"
 output_layer_5 = apply_relu(output_layer_4);
 
-% 6th Layer - First Maxpool - Points to function file "apply_maxpool1.m"
-output_layer_6 = apply_maxpool1(output_layer_5);
+% 6th Layer - First Maxpool - Points to function file "apply_maxpool.m"
+output_layer_6 = apply_maxpool(output_layer_5);
 
 % 7th Layer - Third Convolution - Points to function file "apply_convolve.m"
 output_layer_7 = apply_convolve(output_layer_6,filterbanks{1,7},biasvectors{1,7});
@@ -34,8 +36,8 @@ output_layer_9 = apply_convolve(output_layer_8,filterbanks{1,9},biasvectors{1,9}
 % 10th Layer - Fourth ReLU - Points to function file "apply_relu.m"
 output_layer_10 = apply_relu(output_layer_9);
 
-% 11th Layer - Second Maxpool - Points to function file "apply_maxpool1.m"
-output_layer_11 = apply_maxpool1(output_layer_10);
+% 11th Layer - Second Maxpool - Points to function file "apply_maxpool.m"
+output_layer_11 = apply_maxpool(output_layer_10);
 
 % 12th Layer - Fifth Convolution - Points to function file "apply_convolve.m"
 output_layer_12 = apply_convolve(output_layer_11,filterbanks{1,12},biasvectors{1,12});
@@ -49,11 +51,14 @@ output_layer_14 = apply_convolve(output_layer_13,filterbanks{1,14},biasvectors{1
 % 15th Layer - Sixth ReLU - Points to function file "apply_relu.m"
 output_layer_15 = apply_relu(output_layer_14);
 
-% 16th Layer - Third Maxpool - Points to function file "apply_maxpool1.m"
-output_layer_16 = apply_maxpool1(output_layer_15);
+% 16th Layer - Third Maxpool - Points to function file "apply_maxpool.m"
+output_layer_16 = apply_maxpool(output_layer_15);
 
 % 17th Layer - Fullconnect - Points to function file "apply_fullconnect.m"
 output_layer_17 = apply_fullconnect(output_layer_16,filterbanks{1,17},biasvectors{1,17});
 
 % 18th Layer - Softmax - Points to function file "apply_softmax.m"
 output_layer_18 = apply_softmax(output_layer_17);
+
+% Output Graph with Probabilities
+%bar(
