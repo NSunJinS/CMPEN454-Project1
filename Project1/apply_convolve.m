@@ -1,4 +1,4 @@
-function output = apply_convolve3(input,filterbanks,biasvectors)
+function output = apply_convolve(input,filterbanks,biasvectors)
 	output = zeros(size(input,1),size(input,2),size(filterbanks,4));
 	for l = 1:size(filterbanks,4)
 		sum = double(zeros(size(input,1),size(input,2)));
