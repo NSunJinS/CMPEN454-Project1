@@ -1,10 +1,11 @@
 % EE454 Project 1 - Main
 % Group Members: Danny McClure, Nicholas Scarpitta, Weslee Hwang, & Mackenzie Myers
 
-load('./debuggingTest.mat'); 
 load('./CNNparameters.mat','filterbanks','biasvectors');
+read_parameters % Given Sample code to output CNN layer types and filterbank sizes
 
-input_image = imrgb; % <- interchange imrgb for image file under test.
+input_image = load_demo; % (Un)comment line to enable/disable demo
+%input_image = load_cifar10;
 
 % 1st Layer - First Image Normalization - Points to function file "apply_imnormalize.m"
 output_layer_1 = apply_imnormalize(input_image);
