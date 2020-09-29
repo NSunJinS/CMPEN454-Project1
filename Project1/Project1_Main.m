@@ -2,6 +2,7 @@
 % Group Members: Danny McClure, Nicholas Scarpitta, Weslee Hwang, & Mackenzie Myers
 
 load('./CNNparameters.mat','filterbanks','biasvectors');
+load('./cifar10testdata.mat','classlabels');
 read_parameters % Given Sample code to output CNN layer types and filterbank sizes
 
 input_image = load_demo; % (Un)comment line to enable/disable demo
