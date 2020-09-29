@@ -6,6 +6,7 @@ read_parameters % Given Sample code to output CNN layer types and filterbank siz
 
 input_image = load_demo; % (Un)comment line to enable/disable demo
 %input_image = load_cifar10;
+%input_image = imageset;
 
 % 1st Layer - First Image Normalization - Points to function file "apply_imnormalize.m"
 output_layer_1 = apply_imnormalize(input_image);
@@ -61,6 +62,27 @@ output_layer_17 = apply_fullconnect(output_layer_16,filterbanks{1,17},biasvector
 % 18th Layer - Softmax - Points to function file "apply_softmax.m"
 output_layer_18 = apply_softmax(output_layer_17);
 
+
+%-----Accuracy-and-Confusion-Matrix-----------
+
+
+%---------------------------------------------
+
+
+%-----Individual-Image-output-data------------
 % Output Graph with Probabilities
+figure(10)
 output = (output_layer_18(:));
 bar(output)
+
+%sample code to show image
+figure(11)
+imagesc(input_image);
+truesize(gcf,[64 64]);
+
+% Find most probable class
+classprobvec = squeeze(output_layer_18);
+[maxprob,maxclass] = max(classprobvec);
+% Using classlabels is defined in ’cifar10testdata.mat’
+fprintf('Estimated class is %s with probability %.4f\n', classlabels{maxclass}, maxprob);
+%---------------------------------------------

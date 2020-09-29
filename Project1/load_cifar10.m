@@ -13,6 +13,6 @@ for classindex = 1:10
     title(sprintf('%s',classlabels{classindex}));
 end
 
-output = imageset;
+output = imrgb;
 
 end
