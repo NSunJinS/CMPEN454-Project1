@@ -2,12 +2,14 @@
 % Group Members: Danny McClure, Nicholas Scarpitta, Weslee Hwang, & Mackenzie Myers
 
 load('./CNNparameters.mat','filterbanks','biasvectors');
-load('./cifar10testdata.mat','classlabels');
+load('./cifar10testdata.mat');
 read_parameters % Given Sample code to output CNN layer types and filterbank sizes
 
-input_image = load_demo; % (Un)comment line to enable/disable demo
-%input_image = load_cifar10;
-%input_image = imageset;
+confmatrix = zeros(10,10);
+for i = 1:1:10000 % WARNING! This will run 10,000 loops.
+
+input_image = imageset(:,:,:,i);
+%input_image = load_demo; % (Un)comment line to enable/disable demo
 
 % 1st Layer - First Image Normalization - Points to function file "apply_imnormalize.m"
 output_layer_1 = apply_imnormalize(input_image);
@@ -66,24 +68,34 @@ output_layer_18 = apply_softmax(output_layer_17);
 
 %-----Accuracy-and-Confusion-Matrix-----------
 
-
-%---------------------------------------------
-
-
-%-----Individual-Image-output-data------------
-% Output Graph with Probabilities
-figure(10)
-output = (output_layer_18(:));
-bar(output)
-
-%sample code to show image
-figure(11)
-imagesc(input_image);
-truesize(gcf,[64 64]);
-
 % Find most probable class
 classprobvec = squeeze(output_layer_18);
 [maxprob,maxclass] = max(classprobvec);
-% Using classlabels is defined in ’cifar10testdata.mat’
-fprintf('Estimated class is %s with probability %.4f\n', classlabels{maxclass}, maxprob);
+
+% Index into matrix and add 1 for each value
+confmatrix(trueclass(i),maxclass) = confmatrix(trueclass(i),maxclass)+1
+
 %---------------------------------------------
+i = i + 1
+end
+
+% Generate Confusion Matrix
+confusionchart(confmatrix, classlabels)
+
+% %-----Individual-Image-output-data------------
+% % Output Graph with Probabilities
+% figure(10)
+% output = (output_layer_18(:));
+% bar(output)
+% 
+% %sample code to show image
+% figure(11)
+% imagesc(input_image);
+% truesize(gcf,[64 64]);
+% 
+% % Find most probable class
+% classprobvec = squeeze(output_layer_18);
+% [maxprob,maxclass] = max(classprobvec);
+% % Using classlabels is defined in ’cifar10testdata.mat’
+% fprintf('Estimated class is %s with probability %.4f\n', classlabels{maxclass}, maxprob);
+% %---------------------------------------------
