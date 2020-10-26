@@ -3,8 +3,19 @@
 
 % Input/Parse Mocap Dataset
     mocap = 'Subject4-Session3-Take4_mocapJoints.mat';
-    mocap_full = open(mocap);
+    mocap = open(mocap);
     
+    joints = mocap.mocapJoints;
+    
+    ids = [];
+    for frame = 1:size(joints,1)
+        if not(any(joints(frame,1:12,4) == 0))
+        ids = [ids frame];
+        end
+    end
+    
+    joints_new = joints(ids,:,1:3);
+
 % Input/Parse Camera Paramters
 
 % Project 3D to 2D Locations
@@ -16,7 +27,10 @@
     vue4video = VideoReader(filenamevue4mp4);
     
     % Convert World pts to Cam pts
-    campoint = world2cam(Pmat, worldpoint);
+    campoint = world2cam(Pmat, wpoint);
+    
+    % Convert World pts to Pix pts
+    pixpoint = world2pix(Kmat, cpoint);
     
 % Triangulation of 2D to 3D 
 
