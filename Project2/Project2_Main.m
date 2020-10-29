@@ -26,6 +26,31 @@
 
 % Input/Parse Camera Paramters
 
+    % Parameters for Vue2 camera
+    printpoints2 = vue2.prinpoint;
+    xprint2 = printpoints2(1);
+    yprint2 = printpoints2(2);
+    rotation2 = vue2.Rmat;
+    position2 = vue2.position;
+    focal_length2 =  vue2.foclen;
+    pixelmat2 = [1 0 xprint2; 0 -1 yprint2; 0 0 1];
+    Pmat = vue2.Pmat;
+    Pmat = [Pmat;0 0 0 1];
+    
+    % Create Rotation Matrix [R]
+    rotation_matrix = [rotation2; 0,0,0];
+    temp = [0;0;0;1];
+    rotation_matrix = [rotation_matrix temp];
+    
+    % Create skew matrix [S]
+    skew_matrix = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
+    position2 = position2*-1;
+    position2 = [position2 1]';
+    skew_matrix = [skew_matrix position2];
+
+    % Create Essential Matrix [E]
+    essential_matrix = rotation_matrix * skew_matrix;
+    
 % Project 3D to 2D Locations
     % Load in videos
     filenamevue2mp4 = 'Subject4-Session3-24form-Full-Take4-Vue2_updated.mp4';
