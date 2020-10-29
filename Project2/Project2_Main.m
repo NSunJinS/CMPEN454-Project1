@@ -7,14 +7,22 @@
     
     joints = mocap.mocapJoints;
     
-    ids = [];
+    ids = []; % Grabs frames and ids with valid confidence values, stores them in joints_new
     for frame = 1:size(joints,1)
         if not(any(joints(frame,1:12,4) == 0))
         ids = [ids frame];
         end
     end
     
-    joints_new = joints(ids,:,1:3);
+    joints_new = joints(ids,:,1:4);
+    
+    % grabs data for singular frame
+    mocapFnum = 1000; %mocap frame number 1000 
+    x = joints_new(mocapFnum,:,1); %array of 12 X coordinates
+    y = joints_new(mocapFnum,:,2); %  Y coordinates
+    z = joints_new(mocapFnum,:,3); %  Z coordinates
+    conf = joints_new(mocapFnum,:,4); %confidence values
+
 
 % Input/Parse Camera Paramters
 
