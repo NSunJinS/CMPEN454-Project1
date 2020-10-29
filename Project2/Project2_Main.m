@@ -37,7 +37,8 @@
 % Computation of Error btwn Original and Triangulated 3D pts
 
 % Compute Euclidean Distance
-L_Squared = Euclidean_Dist(point1, point2); % Function for computing L^2
-
+point1 = 1; %Point 1 here (replace 1 & 2)
+point2 = 2; %Point 2 here
+L_Squared = sqrt(sum((point1(:) - point2(:)) .^ 2));
 
 % Compute Epipolar Lines
