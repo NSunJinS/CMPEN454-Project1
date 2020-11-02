@@ -10,7 +10,7 @@
     ids = []; % Grabs frames and ids with valid confidence values, stores them in joints_new
     for frame = 1:size(joints,1)
         if not(any(joints(frame,1:12,4) == 0))
-        ids = [ids frame];
+        ids = [ids frame]; %#ok<AGROW> %%% suppressed warning sign about pre allocating the var
         end
     end
     
