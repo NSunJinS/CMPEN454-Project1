@@ -73,10 +73,13 @@
     vue4video = VideoReader(filenamevue4mp4);
     
     % Convert World pts to Cam pts
-    campoint = world2cam(Pmat2, wpoint);
+    campoint = Pmat * worldpoint;
     
     % Convert World pts to Pix pts
-    pixpoint = world2pix(Kmat, cpoint);
+    pixpoint = Kmat*cpoint; % Convert film coordinates to pixel coordinates
+    pixpoint(1) = pixpoint(1)/pixpoint(3);
+    pixpoint(2) = pixpoint(2)/pixpoint(3);
+    pixpoint(3) = 1;
     
 % Triangulation of 2D to 3D 
 
