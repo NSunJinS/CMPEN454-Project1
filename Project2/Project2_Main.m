@@ -23,7 +23,6 @@
     z = joints_new(mocapFnum,:,3); %  Z coordinates
     conf = joints_new(mocapFnum,:,4); %confidence values
 
-
 % Input/Parse Camera Paramters
 
     % Parameters for Vue2 camera
@@ -64,6 +63,22 @@
     Pmat4 = vue4.Pmat;
     Pmat4 = [Pmat4;0 0 0 1];
     
+    % Forward projection for each vue for all 12 joints
+A = zeros(3,size(joints_new,1),12);
+B = zeros(3,size(joints_new,1),12);
+for y = 1:12
+    for x = 1:size(joints_new,1)
+        point = joints_new(x,y,1:3);
+        newpoint = world2camera(Pmat2, [point(1); point(2);point(3);1]);
+        pixelpoint = camera2pixel([vue2.Kmat [0;0;0]], newpoint);
+        A(:,x,y) = pixelpoint;
+        
+        newpoint4 = world2camera(Pmat4, [point(1);point(2);point(3);1]);
+        pixelpoint4 = camera2pixel([vue4.Kmat [0;0;0]],newpoint4);
+        B(:,x,y) = pixelpoint4;
+    end
+end
+
 % Project 3D to 2D Locations
     % Load in videos
     filenamevue2mp4 = 'Subject4-Session3-24form-Full-Take4-Vue2_updated.mp4';
@@ -71,12 +86,6 @@
     
     filenamevue4mp4 = 'Subject4-Session3-24form-Full-Take4-Vue4_updated.mp4';
     vue4video = VideoReader(filenamevue4mp4);
-    
-    % Convert World pts to Cam pts
-    campoint = world2cam(Pmat2, wpoint);
-    
-    % Convert World pts to Pix pts
-    pixpoint = world2pix(Kmat, cpoint);
     
 % Triangulation of 2D to 3D 
 
@@ -88,3 +97,23 @@ point2 = 2; %Point 2 here
 L_Squared = sqrt(sum((point1(:) - point2(:)) .^ 2));
 
 % Compute Epipolar Lines
+
+
+
+% Needed Functions
+function[newpoint] = world2camera(Pmat, worldpoint)
+    newpoint = Pmat * worldpoint; % Convert world coordinates to camera coordinates
+end
+
+function [pixelpoint] = camera2pixel(Kmat, point)
+    pixelpoint = Kmat*point; % Convert film coordinates to pixel coordinates
+    pixelpoint(1) = pixelpoint(1)/pixelpoint(3);
+    pixelpoint(2) = pixelpoint(2)/pixelpoint(3);
+    pixelpoint(3) = 1;
+end
+
+function [pixelpoint] = world2pixel(Pmat,worldpoint,Kmat)
+camerapoint = world2camera(Pmat,worldpoint);
+pixelpoint = camera2pixel(Kmat,camerapoint);
+end
+
