@@ -32,9 +32,9 @@ function out = project3DTo2D(cam, worldCoord3DPoints)
     for ii = 1: length(worldCoord3DPoints)
         p = worldCoord3DPoints(1:3,ii);
         p = [p;1];
-        temp =(K * Rt * p)
-        temp = temp ./ temp(3,1)
-        out = [out temp]
+        temp =(K * Rt * p);
+        temp = temp ./ temp(3,1);
+        out = [out temp];
     end
     
 end
