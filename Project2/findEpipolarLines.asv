@@ -28,7 +28,7 @@ function [EpipolarLines1, EpipolarLines2] = findEpipolarLines(worldCoord3DPoints
     skew_matrix1 = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
     position1 = position1*-1;
     position1 = [position1 1]';
-    skew_matrix1 = [skew_matrix1 position1];
+    skew_matrix1 = [skew_matrix position1];
 
     % Create Essential Matrix [E]
     essential_matrix1 = rotation_matrix1 * skew_matrix1;
@@ -42,21 +42,19 @@ function [EpipolarLines1, EpipolarLines2] = findEpipolarLines(worldCoord3DPoints
     Pmat2 = [Pmat2;0 0 0 1];
     
     % Create Rotation Matrix [R]
-    rotation_matrix2 = [rotation2; 0,0,0];
+    rotation_matrix = [rotation1; 0,0,0];
     temp = [0;0;0;1];
-    rotation_matrix2 = [rotation_matrix2 temp];
+    rotation_matrix1 = [rotation_matrix1 temp];
     
     % Create Skew Matrix [S]
-    skew_matrix2 = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
-    position2 = position2*-1;
-    position2 = [position2 1]';
-    skew_matrix2 = [skew_matrix2 position2];
+    skew_matrix1 = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
+    position1 = position1*-1;
+    position1 = [position1 1]';
+    skew_matrix1 = [skew_matrix position1];
 
     % Create Essential Matrix [E]
-    essential_matrix2 = rotation_matrix2 * skew_matrix2;
-   
+    essential_matrix1 = rotation_matrix1 * skew_matrix1;
 
-EpipolarLines1 = [];
-
-EpipolarLines2 = [];
+EpipolarLines1 = ;
+EpipolarLines2 = ;
 end
