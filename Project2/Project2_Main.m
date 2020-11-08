@@ -110,7 +110,7 @@ end
     %scatter(point4(1,:),point4(2,:),'filled');
     
 % Triangulation of 2D to 3D 
-    
+     triangulation = traingulationTo3D(vue2, vue4, point2, point4)
 % Computation of Error btwn Original and Triangulated 3D pts
 
 % Compute Euclidean Distance
