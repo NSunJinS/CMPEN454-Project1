@@ -83,13 +83,34 @@ end
     % Load in videos
     filenamevue2mp4 = 'Subject4-Session3-24form-Full-Take4-Vue2.mp4';
     vue2video = VideoReader(filenamevue2mp4);
+    vue2video.CurrentTime = (mocapFnum-1)*(50/100)/vue2video.FrameRate;
+    vid2Frame = readFrame(vue2video);
     
+    x = joints(mocapFnum,:,1);
+    y = joints(mocapFnum,:,2);
+    z = joints(mocapFnum,:,3);
+    t = [x;y;z]
+    point2 = project3DTo2D(vue2,t)
+    %imshow(vid2Frame)
+    %hold on;
+    %scatter(point2(1,:),point2(2,:),'filled');
     
     filenamevue4mp4 = 'Subject4-Session3-24form-Full-Take4-Vue4.mp4';
     vue4video = VideoReader(filenamevue4mp4);
+    vue4video.CurrentTime = (mocapFnum-1)*(50/100)/vue4video.FrameRate;
+    vid4Frame = readFrame(vue4video);
+    
+    x = joints(mocapFnum,:,1);
+    y = joints(mocapFnum,:,2);
+    z = joints(mocapFnum,:,3);
+    t = [x;y;z]
+    point4 = project3DTo2D(vue4,t)
+    %imshow(vid4Frame)
+    %hold on;
+    %scatter(point4(1,:),point4(2,:),'filled');
     
 % Triangulation of 2D to 3D 
-
+    
 % Computation of Error btwn Original and Triangulated 3D pts
 
 % Compute Euclidean Distance
