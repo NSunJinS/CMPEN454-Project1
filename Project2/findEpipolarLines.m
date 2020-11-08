@@ -55,8 +55,20 @@ function [EpipolarLines1, EpipolarLines2] = findEpipolarLines(worldCoord3DPoints
     % Create Essential Matrix [E]
     essential_matrix2 = rotation_matrix2 * skew_matrix2;
    
+%find epipolar lines of cam1 
 
-EpipolarLines1 = [];
+for i=1:length(cam2PixelCoords)
+    p = cam2PixelCoords(1:3,i);
+    line = transpose(essential_matrix2) * p;
+    EpipolarLines1 = [EpipolarLines1 p];
+end
 
-EpipolarLines2 = [];
+%find epipolar lines of cam2
+
+for i=1:length(cam1PixelCoords)
+    p = cam1PixelCoords(1:3,i);
+    line = transpose(essential_matrix1) * p;
+    EpipolarLines2 = [EpipolarLines2 p];
+end
+
 end
