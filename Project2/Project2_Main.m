@@ -110,13 +110,13 @@ end
     %scatter(point4(1,:),point4(2,:),'filled');
     
 % Triangulation of 2D to 3D 
-     triangulation = traingulationTo3D(vue2, vue4, point2, point4)
+     triangulation = triangulationTo3D(vue2, vue4, point2, point4)
 % Computation of Error btwn Original and Triangulated 3D pts
 
 % Compute Euclidean Distance
-point1 = 1; %Point 1 here (replace 1 & 2)
-point2 = 2; %Point 2 here
-L_Squared = sqrt(sum((point1(:) - point2(:)) .^ 2));
+%point1 = 1; %Point 1 here (replace 1 & 2)
+%point2 = 2; %Point 2 here
+L_Squared = sqrt(sum((point2(:) - point4(:)) .^ 2));
 
 % Compute Epipolar Lines
 
