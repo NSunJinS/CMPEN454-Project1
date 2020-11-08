@@ -12,15 +12,6 @@ function out = project3DTo2D(cam, worldCoord3DPoints)
     
     % contruct the K *[ R | T ] chain 
     
-    %T
-    t = cam.position;
-    t = -t';
-    
-    %Rt
-    Rt = [cam.Rmat  t];
-    temp = [0 0 0 1];
-    Rt = [Rt;temp];
-    
     %K
     K = cam.Kmat;
     temp = [0;0;0];
@@ -32,7 +23,7 @@ function out = project3DTo2D(cam, worldCoord3DPoints)
     for ii = 1: length(worldCoord3DPoints)
         p = worldCoord3DPoints(1:3,ii);
         p = [p;1];
-        temp =(K * Rt * p);
+        temp =(K * Pmat2 * p);
         temp = temp ./ temp(3,1);
         out = [out temp];
     end
