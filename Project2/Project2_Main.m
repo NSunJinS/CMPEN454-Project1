@@ -81,10 +81,10 @@ end
 
 % Project 3D to 2D Locations
     % Load in videos
-    filenamevue2mp4 = 'Subject4-Session3-24form-Full-Take4-Vue2_updated.mp4';
+    filenamevue2mp4 = 'Subject4-Session3-24form-Full-Take4-Vue2.mp4';
     vue2video = VideoReader(filenamevue2mp4);
     
-    filenamevue4mp4 = 'Subject4-Session3-24form-Full-Take4-Vue4_updated.mp4';
+    filenamevue4mp4 = 'Subject4-Session3-24form-Full-Take4-Vue4.mp4';
     vue4video = VideoReader(filenamevue4mp4);
     
 % Triangulation of 2D to 3D 
