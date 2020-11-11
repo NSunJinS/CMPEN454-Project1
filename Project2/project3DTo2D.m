@@ -1,4 +1,5 @@
 function out = project3DTo2D(cam, worldCoord3DPoints) 
+    % pull out the camera parameters
     printpoints2 = cam.prinpoint;
     xprint2 = printpoints2(1);
     yprint2 = printpoints2(2);
@@ -9,18 +10,23 @@ function out = project3DTo2D(cam, worldCoord3DPoints)
     Pmat2 = cam.Pmat;
     Pmat2 = [Pmat2;0 0 0 1];
     
-    % Create Rotation Matrix [R]
-    rotation_matrix = [rotation2; 0,0,0];
-    temp = [0;0;0;1];
-    rotation_matrix = [rotation_matrix temp];
+    % contruct the K *[ R | T ] chain 
     
-    % Create Skew Matrix [S]
-    skew_matrix = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
-    position2 = position2*-1;
-    position2 = [position2 1]';
-    skew_matrix = [skew_matrix position2];
-
-    % Create Essential Matrix [E]
-    essential_matrix = rotation_matrix * skew_matrix;
+    %K
+    K = cam.Kmat;
+    temp = [0;0;0];
+    
+    K = [K temp];
+    
+    %out(length(worldCoord3DPoints), 3) = 0;
+    out = [];
+    for ii = 1: length(worldCoord3DPoints)
+        p = worldCoord3DPoints(1:3,ii);
+        p = [p;1];
+        temp =(K * Pmat2 * p);
+        temp = temp ./ temp(3,1);
+        out = [out temp];
+    end
+    
 end
 

@@ -121,8 +121,7 @@ end
 
 % Compute Epipolar Lines
 
-[EpipolarLines1, EpipolarLines2] = findEpipolarLines(t, vue2, point2, vue4, point4);
-
+findEpipolarLines(t, vue1, point2, vue2, point4)
 
 % Needed Functions
 function[newpoint] = world2camera(Pmat, worldpoint)

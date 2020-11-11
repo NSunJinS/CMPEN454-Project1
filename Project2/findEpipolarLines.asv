@@ -20,15 +20,10 @@ function [EpipolarLines1, EpipolarLines2] = findEpipolarLines(worldCoord3DPoints
     Pmat1 = [Pmat1;0 0 0 1];
     
     % Create Rotation Matrix [R]
-    rotation_matrix1 = [rotation1; 0,0,0];
-    temp = [0;0;0;1];
-    rotation_matrix1 = [rotation_matrix1 temp];
+    rotation_matrix1 = rotation1;
     
     % Create Skew Matrix [S]
-    skew_matrix1 = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
-    position1 = position1*-1;
-    position1 = [position1 1]';
-    skew_matrix1 = [skew_matrix position1];
+    skew_matrix1 = [ 0 -cam1.position(1,3) cam1.position(1,2); cam1.position(1,3) 0 -cam1.position(1,1); -cam1.position(1,2) cam1.position(1,1) 0];
 
     % Create Essential Matrix [E]
     essential_matrix1 = rotation_matrix1 * skew_matrix1;
@@ -42,19 +37,34 @@ function [EpipolarLines1, EpipolarLines2] = findEpipolarLines(worldCoord3DPoints
     Pmat2 = [Pmat2;0 0 0 1];
     
     % Create Rotation Matrix [R]
-    rotation_matrix = [rotation1; 0,0,0];
-    temp = [0;0;0;1];
-    rotation_matrix1 = [rotation_matrix1 temp];
+    rotation_matrix2 = rotation2;
     
     % Create Skew Matrix [S]
-    skew_matrix1 = [1 0 0; 0 1 0; 0 0 1; 0 0 0];
-    position1 = position1*-1;
-    position1 = [position1 1]';
-    skew_matrix1 = [skew_matrix position1];
+    skew_matrix2 = [ 0 -cam2.position(1,3) cam2.position(1,2); cam2.position(1,3) 0 -cam2.position(1,1); -cam2.position(1,2) cam2.position(1,1) 0];
 
     % Create Essential Matrix [E]
-    essential_matrix1 = rotation_matrix1 * skew_matrix1;
+    essential_matrix2 = rotation_matrix2 * skew_matrix2;
 
-EpipolarLines1 = ;
-EpipolarLines2 = ;
+    
+    
+    
+EpipolarLines1 = [];
+   
+%find epipolar lines of cam1 
+
+for i=1:length(cam2PixelCoords)
+    p = cam2PixelCoords(1:3,i);
+    line = transpose(essential_matrix2) * p;
+    newEpipolarLines1 = [EpipolarLines1 line];
+    EpipolarLines1 = newEpipolarLines1;
+end
+
+%find epipolar lines of cam2
+
+for i=1:length(cam1PixelCoords)
+    p = cam1PixelCoords(1:3,i);
+    line = transpose(essential_matrix1) * p;
+    EpipolarLines2 = [EpipolarLines2 p];
+end
+
 end
