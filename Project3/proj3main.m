@@ -15,7 +15,35 @@
         
 % gamma_parameter = number between 0 and 255. It is the gamma “decay” parameter used in
         % the pseudocode for persistent frame differencing.
-function out = proj3main(dirstring,maxframenum,abs_doff_threshold,alpha_parameter,gamma_parameter) 
+function out = proj3main(dirstring,maxframenum,abs_diff_threshold,alpha_parameter,gamma_parameter) 
 
+%function stubs as per the project description
+
+%% read in each image in a loop and convert to grayscale
+
+
+%% compute Background Subtraction
+
+%% compute Frame Differencing
+
+%% compute Adaptive Background Subtraction
+
+%% compute Persistent Frame Differencing
+
+
+
+%% 
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
