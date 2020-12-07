@@ -19,20 +19,24 @@ function out = proj3main(dirstring,maxframenum,abs_diff_threshold,alpha_paramete
 
 %function stubs as per the project description
 
-v = VideoWriter(dirstring);
+v = VideoWriter('test');
 open(v);
+
+% Back Sub init
+staticBackground = rgb2gray(imread(strcat(dirstring, 'f0001.jpg')));
+
+
+
 %% read in each image in a loop and convert to grayscale
 for frame = 1:maxframenum
     frameFile = sprintf('f%04d',frame);
     im = imread(strcat(dirstring,frameFile,'.jpg'));
     imGray = rgb2gray(im);
     
-    writeVideo(v,imGray);
-end
-close(v);
+    
 
 %% compute Background Subtraction
-
+    bSub = backSub(imGray, staticBackground, abs_diff_threshold);
 %% compute Frame Differencing
 
 %% compute Adaptive Background Subtraction
@@ -41,8 +45,14 @@ close(v);
 
 
 
-%% 
 
+%% concatenize the 4 different frame for the video
+
+
+%% write the output to a video file
+    writeVideo(v,bSub);
+end
+close(v);
 end
 
 
