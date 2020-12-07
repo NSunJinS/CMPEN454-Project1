@@ -1,4 +1,4 @@
-% EE454 Project 2 - Main
+% EE454 Project 3 - Main
 % Group Members: Danny McClure, Nicholas Scarpitta, Weslee Hwang, & Mackenzie Myers 
 
 
