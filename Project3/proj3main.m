@@ -42,8 +42,6 @@ for frame = 1:maxframenum
     frameFile = sprintf('f%04d',frame);
     im = imread(strcat(dirstring,frameFile,'.jpg'));
     imGray = rgb2gray(im);
-    
-    
 
 %% compute Background Subtraction
     bSub = backSub(imGray, staticBackground, lambda);
