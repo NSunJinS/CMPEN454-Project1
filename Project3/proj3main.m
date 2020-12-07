@@ -24,8 +24,8 @@ open(v);
 
 % Back Sub init
 staticBackground = rgb2gray(imread(strcat(dirstring, 'f0001.jpg')));
-
-
+% frame differencing init
+frameDiffBackground = staticBackground;
 
 %% read in each image in a loop and convert to grayscale
 for frame = 1:maxframenum
@@ -37,9 +37,16 @@ for frame = 1:maxframenum
 
 %% compute Background Subtraction
     bSub = backSub(imGray, staticBackground, abs_diff_threshold);
+    
 %% compute Frame Differencing
-
+    % using imGray as I(t)
+    fDiff = frameDiff(imGray, frameDiffBackground, abs_diff_threshold);
+    frameDiffBackground = imGray;
+    
 %% compute Adaptive Background Subtraction
+
+
+
 
 %% compute Persistent Frame Differencing
 
@@ -47,10 +54,10 @@ for frame = 1:maxframenum
 
 
 %% concatenize the 4 different frame for the video
-
+    outimage = [bSub.*255 fDiff.*255; imGray imGray];
 
 %% write the output to a video file
-    writeVideo(v,bSub);
+    writeVideo(v,outimage);
 end
 close(v);
 end
