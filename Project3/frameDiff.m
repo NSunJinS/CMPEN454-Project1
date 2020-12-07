@@ -1,5 +1,4 @@
-function out = frameDiff(I,B,threshold)
+function out = frameDiff(I,B,lambda)
     diff = abs(B - I);
-    lambda = threshold/255;
     out = im2double(imbinarize(diff, lambda));
 end

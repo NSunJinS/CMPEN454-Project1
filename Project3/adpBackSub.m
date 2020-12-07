@@ -1,5 +1,4 @@
-function out = adpBackSub(I,B,threshold)
+function out = adpBackSub(I,B,lambda)
     diff = abs(B - I);
-    lambda = threshold/255;
     out = im2double(imbinarize(diff, lambda));
 end

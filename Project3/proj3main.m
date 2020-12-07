@@ -18,6 +18,8 @@
 function out = proj3main(dirstring,maxframenum,abs_diff_threshold,alpha_parameter,gamma_parameter) 
 
 %function stubs as per the project description
+lambda = abs_diff_threshold/255;
+gamma = gamma_parameter/255;
 
 v = VideoWriter('Project3Video');
 open(v);
@@ -44,20 +46,20 @@ for frame = 1:maxframenum
     
 
 %% compute Background Subtraction
-    bSub = backSub(imGray, staticBackground, abs_diff_threshold);
+    bSub = backSub(imGray, staticBackground, lambda);
     
 %% compute Frame Differencing
     % using imGray as I(t)
-    fDiff = frameDiff(imGray, frameDiffBackground, abs_diff_threshold);
+    fDiff = frameDiff(imGray, frameDiffBackground, lambda);
     frameDiffBackground = imGray;
     
 %% compute Adaptive Background Subtraction
-    adpBSub = adpBackSub(imGray, adpBackSubBackground, abs_diff_threshold);
+    adpBSub = adpBackSub(imGray, adpBackSubBackground, lambda);
     adpBackSubBackground = (imGray.*alpha_parameter) + (adpBackSubBackground.*(1-alpha_parameter));
 
 %% compute Persistent Frame Differencing
-    persistFDiff = persistFrameDiff(imGray, persistFrameDiffBackground, abs_diff_threshold);
-    tmp = max(H-gamma_parameter,0);
+    persistFDiff = persistFrameDiff(imGray, persistFrameDiffBackground, lambda);
+    tmp = max(H-gamma,0);
     H = max(persistFDiff, tmp);
     persistFrameDiffBackground = imGray;
 
