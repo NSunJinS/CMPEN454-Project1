@@ -19,7 +19,7 @@ function out = proj3main(dirstring,maxframenum,abs_diff_threshold,alpha_paramete
 
 %function stubs as per the project description
 
-v = VideoWriter('test');
+v = VideoWriter('Project3Video');
 open(v);
 
 % Back Sub init
@@ -30,6 +30,10 @@ frameDiffBackground = staticBackground;
 
 % adaptive back sub init
 adpBackSubBackground = staticBackground;
+
+% persistent frame differencing init
+persistFrameDiffBackground = staticBackground;
+H = zeros(size(staticBackground));
 
 %% read in each image in a loop and convert to grayscale
 for frame = 1:maxframenum
@@ -49,17 +53,16 @@ for frame = 1:maxframenum
     
 %% compute Adaptive Background Subtraction
     adpBSub = adpBackSub(imGray, adpBackSubBackground, abs_diff_threshold);
-    adpBackSubBackground = imGray.*alpha_parameter + adpBackSubBackground.*(1-alpha_parameter);
-
-
+    adpBackSubBackground = (imGray.*alpha_parameter) + (adpBackSubBackground.*(1-alpha_parameter));
 
 %% compute Persistent Frame Differencing
-
-
-
+    persistFDiff = persistFrameDiff(imGray, persistFrameDiffBackground, abs_diff_threshold);
+    tmp = max(H-gamma_parameter,0);
+    H = max(persistFDiff, tmp);
+    persistFrameDiffBackground = imGray;
 
 %% concatenize the 4 different frame for the video
-    outimage = [bSub.*255 fDiff.*255; adpBSub.*255 imGray];
+    outimage = [bSub fDiff; adpBSub H];
 
 %% write the output to a video file
     writeVideo(v,outimage);
